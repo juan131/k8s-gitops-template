@@ -25,6 +25,7 @@ git-crypt add-gpg-user --trusted DEVELOPER@MAIL.com
 
 ```bash
 git add .gitattributes
+git-crypt status
 git commit -m "feat: add git-crypt"
 git push
 ```

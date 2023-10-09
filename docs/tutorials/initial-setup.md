@@ -106,4 +106,18 @@ ArgoCD is now up & running, so it's time to deploy the rest of services. On the 
 
 - Browse to the Actions tab on your repository and select the "Update tag" action, then click on the "Run workflow" button choosing `staging` as the "Stage to deploy" input.
 - Once the workflow finishes, browse to your repository tags and you should see the `staging` tag created.
-- Finally, browse to the ArgoCD UI and click on "Refresh" to force ArgoCD to sync the changes.
+- Create ArgoCD projects & applications by running the following command:
+
+```bash
+kubectl apply --recursive \
+  -f infrastructure/manifests/staging/argo-cd/argo-cd/projects \
+  -f infrastructure/manifests/staging/argo-cd/argo-cd/apps
+```
+
+- Now, open a tunnel to the ArgoCD server:
+
+```bash
+kubectl port-forward -n argo-cd svc/argo-cd-server 8080:80
+```
+
+- Finally, browse to the ArgoCD UI at [127.0.0.1:8080](http://127.0.0.1:8080) and click on "Refresh" to force ArgoCD to sync the changes.
