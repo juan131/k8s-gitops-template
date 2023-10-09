@@ -19,6 +19,22 @@
           "path": "infrastructure/manifests/production/argo-cd/argo-cd/argocd-sealed-secret.json"
         }
       }
+    },
+    {
+      "name": "api-mock-auth",
+      "namespace": "default",
+      "input": {
+        "type": "file",
+        "config": {
+          "path": "infrastructure/secrets/staging/api-mock.json"
+        }
+      },
+      "output": {
+        "type": "file",
+        "config": {
+          "path": "infrastructure/manifests/staging/default/api-mock/api-mock-sealed-secret.json"
+        }
+      }
     }
   ]
 }

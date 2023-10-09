@@ -97,7 +97,7 @@ kubectl create ns argo-cd
 kubectl apply -f infrastructure/manifests/staging/argo-cd/argo-cd/argocd-sealed-secret.json
 helm install argo-cd oci://registry-1.docker.io/bitnamicharts/argo-cd \
   --values infrastructure/charts-values/staging/argo-cd/argo-cd.yaml \
-  --namespace argo-cd
+  --namespace argo-cd --version 5.1.3
 ```
 
 ## Deploy the rest of services via ArgoCD
@@ -121,3 +121,9 @@ kubectl port-forward -n argo-cd svc/argo-cd-server 8080:80
 ```
 
 - Finally, browse to the ArgoCD UI at [127.0.0.1:8080](http://127.0.0.1:8080) and click on "Refresh" to force ArgoCD to sync the changes.
+
+Now, you should see all the services deployed on the staging cluster. The initial setup is now complete!
+
+## Next steps
+
+Now it's time to deploy some changes so you can see how the CI/CD pipeline works. To do so, follow the steps described in the [Deploying changes tutorial](./deploying-changes.md).
