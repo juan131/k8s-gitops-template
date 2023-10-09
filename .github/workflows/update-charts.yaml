@@ -1,0 +1,22 @@
+name: Update charts
+
+on:
+  # Run job twice a month (1st and 15th days of every month)
+  schedule:
+    - cron: "0 0 1,15 * *"
+
+jobs:
+  update-charts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update chart versions
+        uses: technote-space/create-pr-action@v2
+        with:
+          EXECUTE_COMMANDS: |
+            brew install yq
+            ./scripts/update-charts-versions.sh --target staging
+            ./scripts/update-charts-versions.sh --target production
+          COMMIT_MESSAGE: 'chore: update charts versions'
+          PR_BRANCH_PREFIX: 'chore/'
+          PR_BRANCH_NAME: 'update-charts-versions-${{github.run_id}}'
+          PR_TITLE: 'chore: update charts versions'

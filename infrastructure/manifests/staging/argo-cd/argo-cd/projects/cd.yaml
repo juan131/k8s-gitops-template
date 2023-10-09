@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cd
+  namespace: argo-cd
+spec:
+  description: "Continuous Deployment services"
+  sourceRepos:
+    - https://github.com/juan131/k8s-gitops-template.git
+    - registry-1.docker.io/bitnamicharts
+  destinations:
+    - namespace: argo-cd
+      server: https://kubernetes.default.svc
+    - namespace: kube-system
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

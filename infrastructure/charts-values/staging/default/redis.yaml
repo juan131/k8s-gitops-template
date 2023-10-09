@@ -1,0 +1,4 @@
+# Authentication based on an existing secret
+auth:
+  enabled: true
+  existingSecret: redis-auth

@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: default
+  namespace: argo-cd
+spec:
+  description: "Default services"
+  sourceRepos:
+    - https://github.com/juan131/k8s-gitops-template.git
+    - registry-1.docker.io/bitnamicharts
+  destinations:
+    - namespace: default
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

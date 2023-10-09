@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis
+  namespace: argo-cd
+spec:
+  project: default
+  sources:
+    - repoURL: registry-1.docker.io/bitnamicharts
+      chart: redis
+      targetRevision: 18.1.0
+      helm:
+        valueFiles:
+          - $values/infrastructure/charts-values/staging/default/redis.yaml
+    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+      targetRevision: staging
+      ref: values
+    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+      targetRevision: staging
+      path: infrastructure/manifests/staging/default/redis
+      directory:
+        recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      # Delete resources when Argo CD detects the resource is no longer defined in Git
+      prune: true
+    syncOptions:
+      # Ensures that namespace specified as the application destination exists in the destination cluster
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground

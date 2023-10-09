@@ -1,0 +1,40 @@
+{
+  "kubesealConfig": {
+    "controllerNamespace": "kube-system",
+    "controllerName": "sealed-secrets-controller"
+  },
+  "secrets": [
+    {
+      "name": "argocd-secret",
+      "namespace": "argo-cd",
+      "input": {
+        "type": "file",
+        "config": {
+          "path": "infrastructure/secrets/staging/argo-cd.json"
+        }
+      },
+      "output": {
+        "type": "file",
+        "config": {
+          "path": "infrastructure/manifests/staging/argo-cd/argo-cd/argocd-sealed-secret.json"
+        }
+      }
+    },
+    {
+      "name": "redis-auth",
+      "namespace": "default",
+      "input": {
+        "type": "file",
+        "config": {
+          "path": "infrastructure/secrets/staging/redis.json"
+        }
+      },
+      "output": {
+        "type": "file",
+        "config": {
+          "path": "infrastructure/manifests/staging/default/redis/redis-sealed-secret.json"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: api-mock
+  namespace: argo-cd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+      targetRevision: staging
+      path: infrastructure/manifests/staging/default/api-mock
+      directory:
+        recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      # Delete resources when Argo CD detects the resource is no longer defined in Git
+      prune: true
+    syncOptions:
+      # Ensures that namespace specified as the application destination exists in the destination cluster
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground

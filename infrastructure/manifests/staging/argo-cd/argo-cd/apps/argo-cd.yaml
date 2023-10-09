@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-cd
+  namespace: argo-cd
+spec:
+  project: cd
+  sources:
+    - repoURL: registry-1.docker.io/bitnamicharts
+      chart: argo-cd
+      targetRevision: 5.1.3
+      helm:
+        valueFiles:
+          - $values/infrastructure/charts-values/staging/argo-cd/argo-cd.yaml
+    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+      targetRevision: staging
+      ref: values
+    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+      targetRevision: staging
+      path: infrastructure/manifests/staging/argo-cd/argo-cd
+      directory:
+        recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argo-cd
+  syncPolicy:
+    automated:
+      # Delete resources when Argo CD detects the resource is no longer defined in Git
+      prune: true
+      # Enable automatic sync when the live cluster's state deviates from the state defined in Git (only for Argo CD)
+      selfHeal: true
+    syncOptions:
+      # Ensures that namespace specified as the application destination exists in the destination cluster
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground

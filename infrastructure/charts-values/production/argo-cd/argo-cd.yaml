@@ -1,0 +1,46 @@
+# Disable secret creation since we are using an existing secret
+config:
+  secret:
+    create: false
+# Application Controller parameters
+controller:
+  logLevel: info
+  logFormat: json
+  metrics:
+    enabled: true
+# API Server parameters
+server:
+  logLevel: info
+  logFormat: json
+  extraArgs:
+    # We can disable authentication and disable TLS since ArgoCD is not exposed outside the cluster
+    - --disable-auth
+    - --insecure
+  metrics:
+    enabled: true
+# Repository Server parameters
+repoServer:
+  logLevel: info
+  logFormat: json
+  metrics:
+    enabled: true
+# Redis parameters
+redis:
+  auth:
+    enabled: true
+    existingSecret: argocd-secret
+    existingSecretPasswordKey: redisPassword
+# OCI credentials
+extraDeploy:  
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: bitnamicharts-creds
+      namespace: argo-cd
+      labels:
+        argocd.argoproj.io/secret-type: repository
+    stringData:
+      name: bitnamicharts
+      url: registry-1.docker.io/bitnamicharts
+      enableOCI: "true"
+      type: helm

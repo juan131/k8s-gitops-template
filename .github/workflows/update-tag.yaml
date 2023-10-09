@@ -1,0 +1,47 @@
+name: Update tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Stage to deploy
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Generate timestamp
+        id: timestamp
+        uses: nanzm/get-time-action@v1.1
+        with:
+          timeZone: 1 # equals to utc+1
+          format: 'YYYY-MM-DD-HH-mm'
+
+      - name: Create unique timestamped tag
+        shell: bash
+        env:
+          TAG: ${{ github.event.inputs.stage }}-${{ steps.timestamp.outputs.time }}
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git tag -a "$TAG" "$GITHUB_SHA" -m "new ${TAG} tag"
+          git push origin "$TAG"
+
+      - name: Update stable tag reference
+        shell: bash
+        env:
+          TAG: ${{ github.event.inputs.stage }}
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git tag -fa "$TAG" "$GITHUB_SHA" -m "Update ${TAG} reference"
+          git push --force origin "$TAG"
