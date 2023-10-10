@@ -10,7 +10,7 @@ You'll need to replace references to the original repository with your own repos
 
 ```bash
 export REPO_NAME=<your-repo-name>
-find "infrastructure/manifests" -type f -name "*.yaml" -print0 | xargs -0 sed -is "s#juan131/k8s-gitops-template#$REPO_NAME#g"
+find "infrastructure/manifests" -type f -name "*.yaml" -print0 | xargs -0 sed -i "" "s#juan131/k8s-gitops-template#$REPO_NAME#g"
 git add infrastructure/manifests
 git commit -m "fix: update repo references"
 git push
@@ -74,7 +74,7 @@ gcloud iam service-accounts keys create github-workflows-sa-key.json \
   --iam-account github-workflows-sa@$GCP_PROJECT.iam.gserviceaccount.com
 ```
 
-- Finally, follow the steps described in [this guide](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) to create a encrypted secrets in your repository named `GCP_PROJECT` & `GKE_SA_KEY` with the values of your GCP project & the Service Account key you just created, respectively.
+- Finally, follow the steps described in [this guide](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) to create a encrypted secret in your repository named `GKE_SA_KEY` with the values of the Service Account key you just created.
 
 ## Install Sealed Secrets & ArgoCD in the staging cluster
 
@@ -85,7 +85,7 @@ Once the setup is done, ArgoCD will be responsible for deploying the services on
 ```bash
 helm install sealed-secrets oci://registry-1.docker.io/bitnamicharts/sealed-secrets \
   --values infrastructure/charts-values/staging/kube-system/sealed-secrets.yaml \
-  --namespace kube-system
+  --namespace kube-system --version 1.5.3
 ```
 
 - Then, edit the [ArgoCD secrets inputs](../../infrastructure/secrets/staging/argo-cd.json) choosing your own password and create a PR with the changes. Once created, the CI will automatically update the associated Sealed Secrets manifest.
