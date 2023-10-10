@@ -126,4 +126,7 @@ Now, you should see all the services deployed on the staging cluster. The initia
 
 ## Next steps
 
-Now it's time to deploy some changes so you can see how the CI/CD pipeline works. To do so, follow the steps described in the [Deploying changes tutorial](./deploying-changes.md).
+Now it's time to deploy some changes so you can see how the CI/CD pipeline works. To do so, follow the steps described in the guides below:
+
+- [Deploying changes tutorial](./deploying-changes.md).
+- [Adding a new service tutorial](./adding-a-new-service.md).

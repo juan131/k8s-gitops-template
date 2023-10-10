@@ -4,7 +4,7 @@ This tutorial will guide you through the process of deploying changes to the sta
 
 ## Prepare your changes in a feature branch
 
-- First, you need to create a new feature branch to prepare your changes. To do so, run the following commands:
+- First, create a new feature branch to prepare your changes. To do so, run the following commands:
 
 ```bash
 git checkout -b feat/my-branch
@@ -58,3 +58,29 @@ kubectl port-forward -n argo-cd svc/argo-cd-server 8080:80
 ```
 
 - Finally, browse to the ArgoCD UI at [127.0.0.1:8080](http://127.0.0.1:8080) and click on "Refresh" to force ArgoCD to sync the changes.
+
+## Test your changes
+
+- Open a tunnel to the API Mock service:
+
+```bash
+kubectl port-forward svc/api-mock 8080:80 &
+```
+
+Try to access the `/foo` endpoint using the API token you updated in the `api-mock.json` file & `GET` method:
+
+```console
+$ curl -H "Authorization: Bearer <your-token>" -X GET http://127.0.0.1:8080/v1/mock/foo
+{"success":true}
+```
+
+Try using a different token or method, for instance:
+
+```console
+$ curl -H "Authorization: Bearer <wrong-token>" -IX GET http://127.0.0.1:8080/v1/mock/foo
+HTTP/1.1 401 Unauthorized
+Vary: Origin
+Www-Authenticate: Bearer realm="example", error="invalid_token", error_description="invalid access token"
+Date: Tue, 10 Oct 2023 06:41:37 GMT
+Content-Length: 0
+```
