@@ -1,0 +1,26 @@
+name: Validate K8s manifests
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'infrastructure/manifests/**'
+
+jobs:
+  kubeval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup kubeval
+        run: |
+          latest_version="$(curl -sH "Accept: application/vnd.github.v3+json" https://api.github.com/repos/instrumenta/kubeval/releases | jq -r "map(select(.prerelease == false)) | .[0].name")"
+          curl -sL "https://github.com/instrumenta/kubeval/releases/download/${latest_version}/kubeval-linux-amd64.tar.gz" | tar -xz kubeval
+          mv kubeval /usr/local/bin/kubeval
+          chmod +x /usr/local/bin/kubeval
+        shell: bash
+
+      - name: Validate manifests
+        run: kubeval --ignore-missing-schemas -d infrastructure/manifests
