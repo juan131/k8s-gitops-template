@@ -16,7 +16,7 @@
       "output": {
         "type": "file",
         "config": {
-          "path": "infrastructure/manifests/staging/argo-cd/argo-cd/argocd-sealed-secret.json"
+          "path": "infrastructure/manifests/staging/argo-cd/argo-cd/argocd-sealed-secret.yaml"
         }
       }
     },
@@ -32,7 +32,7 @@
       "output": {
         "type": "file",
         "config": {
-          "path": "infrastructure/manifests/staging/default/api-mock/api-mock-sealed-secret.json"
+          "path": "infrastructure/manifests/staging/default/api-mock/api-mock-sealed-secret.yaml"
         }
       }
     },
@@ -48,7 +48,7 @@
       "output": {
         "type": "file",
         "config": {
-          "path": "infrastructure/manifests/staging/default/redis/redis-sealed-secret.json"
+          "path": "infrastructure/manifests/staging/default/redis/redis-sealed-secret.yaml"
         }
       }
     }

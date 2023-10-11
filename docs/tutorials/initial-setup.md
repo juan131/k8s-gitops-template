@@ -94,7 +94,7 @@ helm install sealed-secrets oci://registry-1.docker.io/bitnamicharts/sealed-secr
 
 ```bash
 kubectl create ns argo-cd
-kubectl apply -f infrastructure/manifests/staging/argo-cd/argo-cd/argocd-sealed-secret.json
+kubectl apply -f infrastructure/manifests/staging/argo-cd/argo-cd/argocd-sealed-secret.yaml
 helm install argo-cd oci://registry-1.docker.io/bitnamicharts/argo-cd \
   --values infrastructure/charts-values/staging/argo-cd/argo-cd.yaml \
   --namespace argo-cd --version 5.1.3

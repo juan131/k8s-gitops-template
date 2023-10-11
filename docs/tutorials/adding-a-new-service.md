@@ -41,7 +41,7 @@ mkdir -p infrastructure/manifests/staging/default/my-service
 +      "output": {
 +        "type": "file",
 +        "config": {
-+          "path": "infrastructure/manifests/staging/default/my-service/my-service-sealed-secret.json"
++          "path": "infrastructure/manifests/staging/default/my-service/my-service-sealed-secret.yaml"
 +        }
 +      }
 +    }
@@ -110,7 +110,7 @@ replicaCount: 2
 +      "output": {
 +        "type": "file",
 +        "config": {
-+          "path": "infrastructure/manifests/staging/default/nginx/nginx-sealed-secret.json"
++          "path": "infrastructure/manifests/staging/default/nginx/nginx-sealed-secret.yaml"
 +        }
 +      }
 +    }
