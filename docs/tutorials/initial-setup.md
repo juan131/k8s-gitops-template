@@ -88,7 +88,19 @@ helm install sealed-secrets oci://registry-1.docker.io/bitnamicharts/sealed-secr
   --namespace kube-system --version 1.5.3
 ```
 
-- Then, edit the [ArgoCD secrets inputs](../../infrastructure/secrets/staging/argo-cd.json) choosing your own password and create a PR with the changes. Once created, the CI will automatically update the associated Sealed Secrets manifest.
+- Then, create a new branch:
+
+```bash
+git checkout -b chore/update-argocd-credentials
+```
+
+- Now, edit the [ArgoCD secrets inputs](../../infrastructure/secrets/staging/argo-cd.json) choosing your own password and create a PR with the changes. Once created, the CI will automatically update the associated Sealed Secrets manifest.
+
+```bash
+git commit -asm "chore: update ArgoCD credentials"
+git push origin chore/update-argocd-credentials
+```
+
 - Merge the PR to update the Sealed Secret manifest.
 - Finally, install ArgoCD:
 
@@ -117,10 +129,10 @@ kubectl apply --recursive \
 - Now, open a tunnel to the ArgoCD server:
 
 ```bash
-kubectl port-forward -n argo-cd svc/argo-cd-server 8080:80
+kubectl port-forward -n argo-cd svc/argo-cd-server 9090:80 &
 ```
 
-- Finally, browse to the ArgoCD UI at [127.0.0.1:8080](http://127.0.0.1:8080) and click on "Refresh" to force ArgoCD to sync the changes.
+- Finally, browse to the ArgoCD UI at [127.0.0.1:9090](http://127.0.0.1:9090) and click on "Refresh" to force ArgoCD to sync the changes.
 
 Now, you should see all the services deployed on the staging cluster. The initial setup is now complete!
 

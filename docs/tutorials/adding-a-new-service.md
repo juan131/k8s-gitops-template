@@ -60,7 +60,7 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+    - repoURL: https://github.com/<your-repo-name>.git
       targetRevision: staging
       path: infrastructure/manifests/staging/default/my-service
       directory:
@@ -77,6 +77,8 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
 ```
+
+> Note: remember to replace `<your-repo-name>` with the name of your repository.
 
 ### Chart-based service
 
@@ -135,10 +137,10 @@ spec:
       helm:
         valueFiles:
           - $values/infrastructure/charts-values/staging/default/nginx.yaml
-    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+    - repoURL: https://github.com/<your-repo-name>.git
       targetRevision: staging
       ref: values
-    - repoURL: https://github.com/juan131/k8s-gitops-template.git
+    - repoURL: https://github.com/<your-repo-name>.git
       targetRevision: staging
       path: infrastructure/manifests/staging/default/nginx
       directory:
@@ -155,6 +157,8 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
 ```
+
+> Note: remember to replace `<your-repo-name>` with the name of your repository.
 
 ## Create a Pull Request
 
@@ -177,7 +181,7 @@ As you know, ArgoCD is configured to track the changes based on the Git tag `sta
 - Now, open a tunnel to the ArgoCD server:
 
 ```bash
-kubectl port-forward -n argo-cd svc/argo-cd-server 8080:80
+kubectl port-forward -n argo-cd svc/argo-cd-server 9090:80 &
 ```
 
-- Finally, browse to the ArgoCD UI at [127.0.0.1:8080](http://127.0.0.1:8080) and click on "Refresh" to force ArgoCD to sync the changes.
+- Finally, browse to the ArgoCD UI at [127.0.0.1:9090](http://127.0.0.1:9090) and click on "Refresh" to force ArgoCD to sync the changes.

@@ -54,10 +54,10 @@ As you know, ArgoCD is configured to track the changes based on the Git tag `sta
 - Now, open a tunnel to the ArgoCD server:
 
 ```bash
-kubectl port-forward -n argo-cd svc/argo-cd-server 8080:80
+kubectl port-forward -n argo-cd svc/argo-cd-server 9090:80 &
 ```
 
-- Finally, browse to the ArgoCD UI at [127.0.0.1:8080](http://127.0.0.1:8080) and click on "Refresh" to force ArgoCD to sync the changes.
+- Finally, browse to the ArgoCD UI at [127.0.0.1:9090](http://127.0.0.1:9090) and click on "Refresh" to force ArgoCD to sync the changes.
 
 ## Test your changes
 
