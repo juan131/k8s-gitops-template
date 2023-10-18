@@ -10,7 +10,7 @@
       "input": {
         "type": "file",
         "config": {
-          "path": "infrastructure/secrets/production/argo-cd.json"
+          "path": "infrastructure/secrets/production/argo-cd.yaml"
         }
       },
       "output": {
@@ -26,7 +26,7 @@
       "input": {
         "type": "file",
         "config": {
-          "path": "infrastructure/secrets/staging/api-mock.json"
+          "path": "infrastructure/secrets/staging/api-mock.yaml"
         }
       },
       "output": {

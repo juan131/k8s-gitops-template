@@ -21,7 +21,7 @@ mkdir -p infrastructure/manifests/staging/default/my-service
 ```
 
 - Add the required K8s manifests to deploy your service (deployment, service, ingress, etc) under the directory you created in the previous step.
-- (optional) If your service requires any secrets, create a new JSON file with your secrets inputs under `infrastructure/secrets/staging` and configure Sealed Secrets Updater to generate the corresponding sealed secrets by adding a new block at `.sealed-secrets-updater/staging.json`
+- (optional) If your service requires any secrets, create a new YAML file with your secrets inputs under `infrastructure/secrets/staging` and configure Sealed Secrets Updater to generate the corresponding sealed secrets by adding a new block at [Sealed Secrets Updater configuration](../../.sealed-secrets-updater/staging.json).
 
 ```diff
 {
@@ -35,7 +35,7 @@ mkdir -p infrastructure/manifests/staging/default/my-service
 +      "input": {
 +        "type": "file",
 +        "config": {
-+          "path": "infrastructure/secrets/staging/my-service.json"
++          "path": "infrastructure/secrets/staging/my-service.yaml"
 +        }
 +      },
 +      "output": {
@@ -92,7 +92,7 @@ replicaCount: 2
 
 > Note: find more information about the available installation parameters in the [Bitnami NGINX Helm chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/nginx#parameters).
 
-- (optional) If your service requires any secrets, create a new JSON file with your secrets inputs under `infrastructure/secrets/staging` and configure Sealed Secrets Updater to generate the corresponding sealed secrets by adding a new block at `.sealed-secrets-updater/staging.json`
+- (optional) If your service requires any secrets, create a new YAML file with your secrets inputs under `infrastructure/secrets/staging` and configure Sealed Secrets Updater to generate the corresponding sealed secrets by adding a new block at [Sealed Secrets Updater configuration](../../.sealed-secrets-updater/staging.json).
 
 ```diff
 {
@@ -106,7 +106,7 @@ replicaCount: 2
 +      "input": {
 +        "type": "file",
 +        "config": {
-+          "path": "infrastructure/secrets/staging/nginx.json"
++          "path": "infrastructure/secrets/staging/nginx.yaml"
 +        }
 +      },
 +      "output": {

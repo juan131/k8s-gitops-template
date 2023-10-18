@@ -94,7 +94,7 @@ helm install sealed-secrets oci://registry-1.docker.io/bitnamicharts/sealed-secr
 git checkout -b chore/update-argocd-credentials
 ```
 
-- Now, edit the [ArgoCD secrets inputs](../../infrastructure/secrets/staging/argo-cd.json) choosing your own password and create a PR with the changes. Once created, the CI will automatically update the associated Sealed Secrets manifest.
+- Now, edit the [ArgoCD secrets inputs](../../infrastructure/secrets/staging/argo-cd.yaml) choosing your own password and create a PR with the changes. Once created, the CI will automatically update the associated Sealed Secrets manifest.
 
 ```bash
 git commit -asm "chore: update ArgoCD credentials"

@@ -10,7 +10,7 @@ This tutorial will guide you through the process of deploying changes to the sta
 git checkout -b feat/my-branch
 ```
 
-- Then, apply any changes you need to manifests, secrets or chart values. For instance, let's change the configuration for the API Mock service so it only accepts GET requests. To do so, edit the `infrastructure/manifests/staging/default/api-mock/deployment.yaml` file adding the environment variable `METHODS` to the `api-mock` container:
+- Then, apply any changes you need to manifests, secrets or chart values. For instance, let's change the configuration for the API Mock service so it only accepts GET requests. To do so, edit the [API Mock deployment](../../infrastructure/manifests/staging/default/api-mock/deployment.yaml) adding the environment variable `METHODS` to the `api-mock` container:
 
 ```diff
 spec:
@@ -32,11 +32,11 @@ spec:
 
 > Note: please refer to [API Mock documentation](https://github.com/juan131/api-mock#configuration) for more information about the available configuration options.
 
-- Let's also update the API token to use to access the API Mock service. To do so, edit the `infrastructure/secrets/staging/api-mock.json` file:
+- Let's also update the API token to use to access the API Mock service. To do so, edit the [API Mock secrets inputs](../../infrastructure/secrets/staging/api-mock.yaml) file:
 - Now, commit & push your changes:
 
 ```bash
-git add infrastructure/manifests/staging/default/api-mock/deployment.yaml infrastructure/secrets/staging/api-mock.json
+git add infrastructure/manifests/staging/default/api-mock/deployment.yaml infrastructure/secrets/staging/api-mock.yaml
 git commit -m "feat: only accept GET requests & update API token"
 git push -u origin feat/my-branch
 ```
@@ -67,7 +67,7 @@ kubectl port-forward -n argo-cd svc/argo-cd-server 9090:80 &
 kubectl port-forward svc/api-mock 8080:80 &
 ```
 
-Try to access the `/foo` endpoint using the API token you updated in the `api-mock.json` file & `GET` method:
+Try to access the `/foo` endpoint using the API token you updated in the [API Mock secrets inputs](../../infrastructure/secrets/staging/api-mock.yaml) file & `GET` method:
 
 ```console
 $ curl -H "Authorization: Bearer <your-token>" -X GET http://127.0.0.1:8080/v1/mock/foo
