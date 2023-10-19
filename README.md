@@ -19,7 +19,6 @@ A sample K8s project template following GitOps mindset.
 The following tools are required to use this project:
 
 - [Git](https://git-scm.com)
-- [Docker CE](https://www.docker.com/community-edition)
 - [Kubernetes cluster](https://kubernetes.io/docs/setup)
 - [Helm](https://helm.sh)
 - [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) & [Sealed Secrets Updater](https://github.com/juan131/sealed-secrets-updater)
