@@ -12,7 +12,7 @@ You'll need to replace references to the original repository with your own repos
 export REPO_NAME=<your-repo-name>
 find "infrastructure/manifests" -type f -name "*.yaml" -print0 | xargs -0 sed -i "" "s#juan131/k8s-gitops-template#$REPO_NAME#g"
 git add infrastructure/manifests
-git commit -m "fix: update repo references"
+git commit -sm "fix: update repo references"
 git push
 ```
 
@@ -86,6 +86,14 @@ Once the setup is done, ArgoCD will be responsible for deploying the services on
 helm install sealed-secrets oci://registry-1.docker.io/bitnamicharts/sealed-secrets \
   --values infrastructure/charts-values/staging/kube-system/sealed-secrets.yaml \
   --namespace kube-system --version 1.5.3
+```
+
+- Once the Sealed Secrets controller is up & running, run `sealed-secrets-updater` to create the Sealed Secrets manifest:
+
+```bash
+sealed-secrets-updater update --config .sealed-secrets-updater/staging.json
+git add infrastructure/manifests
+git commit -sm "chore: create Sealed Secrets manifest" && git push
 ```
 
 - Then, create a new branch:
